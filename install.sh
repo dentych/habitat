@@ -46,7 +46,7 @@ git config --global alias.b "branch"
 # Download git-prompt if not exists
 if [ ! -f ~/git-prompt.sh ]; then
     echo "Downloading git-prompt.sh..."
-    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > /dev/null
+    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > /dev/null 2>&1
 fi
 
 # Set PS1
