@@ -8,16 +8,18 @@ fi
 
 source settings.sh
 
+echo "Starting: installation!"
+
 # Copy files to homedir
 for file in $FILESTOCOPY; do
     if [ ! -f ~/$file ]; then
-        echo "Copying $file to homedir..."
+        echo " - Copying $file to homedir..."
         cp $file ~/$file
     fi
 done
 
 # Create setup bash script
-echo "Generating bash setup script..."
+echo " - Generating bash setup script..."
 cat << EOF > $OUTFILE
 #!/bin/bash
 
@@ -60,6 +62,7 @@ fi
 echo "Setting up PS1..."
 source git-prompt.sh
 PS1='\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[92m\]\$(__git_ps1 " (%s)")\[\e[00m\] $ '
+echo "Bash setup complete!"
 EOF
 
-echo "Environment installation complete!"
+echo "Installation done!"
