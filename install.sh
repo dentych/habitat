@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ ! -f settings.sh ]; then
+    echo "!! ERROR WHILE RUNNING INSTALL.SH !!"
+    echo "No settings.sh file found!"
+    exit 1
+fi
+
 source settings.sh
 
 # Copy files to homedir
