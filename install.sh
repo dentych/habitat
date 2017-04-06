@@ -68,4 +68,12 @@ PS1='\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[92m\]\$(__git_ps1 " (%s)")\[\e[00m\] $ '
 echo "Bash setup complete!"
 EOF
 
+# Add source to bashrc, profile or whatever is setup
+for file in $BASHPROFILEFILES; do
+    if ! grep --quiet "source $OUTFILE" ~/$file; then
+        echo " - Adding source to $file..."
+        echo "source $OUTFILE" >> ~/$file
+    fi
+done
+
 echo "Installation done!"
