@@ -16,3 +16,6 @@ FILESTOCOPY=".tmux.conf .vimrc"
 
 # Bash profile scripts to add 'source setup.sh' to
 BASHPROFILEFILES=".bashrc"
+
+# Setup echo on (true) or off (false)
+SETUPECHO=false

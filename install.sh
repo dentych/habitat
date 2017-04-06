@@ -32,7 +32,9 @@ cat << EOF > $OUTFILE
 #!/bin/bash
 
 # Setup aliases
-echo "Setting up aliases..."
+if [ $SETUPECHO = true ]; then
+    echo "Setting up aliases..."
+fi
 alias GIT="cd $HOMEDIR/$GITDIR"
 alias gs="git status"
 alias ls="ls --color"
@@ -41,13 +43,17 @@ alias gc="git clean -f && git clean -f -d"
 
 # Git initial setup
 if [ ! -f $HOMEDIR/.gitconfig ]; then
-    echo "Setting up git username and email..."
+    if [ $SETUPECHO = true ]; then
+        echo "Setting up git username and email..."
+    fi
     git config --global user.name "$GITUSERNAME"
     git config --global user.email "$GITEMAIL"
 fi
 
 # Git stuff
-echo "Setting up git aliases..."
+if [ $SETUPECHO = true ]; then
+    echo "Setting up git aliases..."
+fi
 git config --global alias.cp "cherry-pick"
 git config --global alias.co "checkout"
 git config --global alias.cl "clone"
@@ -62,10 +68,14 @@ git config --global alias.b "branch"
 
 # Set PS1
 # Download link: https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-echo "Setting up PS1..."
+if [ $SETUPECHO = true ]; then
+    echo "Setting up PS1..."
+fi
 source git-prompt.sh
 PS1='\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[92m\]\$(__git_ps1 " (%s)")\[\e[00m\] $ '
-echo "Bash setup complete!"
+if [ $SETUPECHO = true ]; then
+    echo "Bash setup complete!"
+fi
 EOF
 
 # Add source to bashrc, profile or whatever is setup
