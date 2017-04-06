@@ -9,7 +9,7 @@ GITUSERNAME=username
 GITEMAIL=email
 
 # Location and name of generated bash setup file
-OUTFILE=../setup.sh
+OUTFILE=~/setup.sh
 
 # Files to copy to homedir
 FILESTOCOPY=".tmux.conf .vimrc"
