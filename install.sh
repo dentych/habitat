@@ -18,6 +18,14 @@ for file in $FILESTOCOPY; do
     fi
 done
 
+# Download git-prompt if not exists
+if [ ! -f ~/git-prompt.sh ]; then
+    echo " - Downloading git-prompt.sh..."
+    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > /dev/null 2>&1
+    echo " - Moving git-prompt.sh to homedir..."
+    mv git-prompt.sh ~/git-prompt.sh
+fi
+
 # Create setup bash script
 echo " - Generating bash setup script..."
 cat << EOF > $OUTFILE
@@ -46,16 +54,11 @@ git config --global alias.cl "clone"
 git config --global alias.ci "commit"
 git config --global alias.st "status -sb"
 git config --global alias.br "branch"
+git config --global alias.d "diff"
 git config --global alias.dc "diff --cached"
 git config --global alias.p "pull -p"
 git config --global alias.f "fetch -p"
 git config --global alias.b "branch"
-
-# Download git-prompt if not exists
-if [ ! -f ~/git-prompt.sh ]; then
-    echo "Downloading git-prompt.sh..."
-    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > /dev/null 2>&1
-fi
 
 # Set PS1
 # Download link: https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
