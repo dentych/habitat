@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -f settings.sh ]; then
+if [[ ! -f settings.sh ]]; then
     echo "!! ERROR WHILE RUNNING REINSTALL.SH !!"
     echo "No settings.sh found!"
     exit 1
