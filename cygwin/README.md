@@ -4,6 +4,8 @@
 * bash-completion
 * vim
 * wget
+* git
+* curl
 
 ## Optional installation
 * tmux
