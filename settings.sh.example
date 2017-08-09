@@ -4,7 +4,7 @@
 HOMEDIR=/path/to/home
 
 # Git dir relative to HOMEDIR
-GITDIR=Documents/Git
+GITDIR=/path/to/git
 GITUSERNAME=username
 GITEMAIL=email
 

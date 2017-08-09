@@ -35,7 +35,7 @@ cat << EOF > $OUTFILE
 if [[ $SETUPECHO = true ]]; then
     echo "Setting up aliases..."
 fi
-alias GIT="cd $HOMEDIR/$GITDIR"
+alias GIT="cd $GITDIR"
 alias gs="git status"
 alias ls="ls --color"
 alias vi="vim"
@@ -43,13 +43,11 @@ alias gc="git clean -f && git clean -f -d"
 alias drd="docker rmi \$(docker images -f dangling=true -q)"
 
 # Git initial setup
-if [[ ! -f $HOMEDIR/.gitconfig ]]; then
-    if [[ $SETUPECHO = true ]]; then
-        echo "Setting up git username and email..."
-    fi
-    git config --global user.name "$GITUSERNAME"
-    git config --global user.email "$GITEMAIL"
+if [[ $SETUPECHO = true ]]; then
+    echo "Setting up git username and email..."
 fi
+git config --global user.name "$GITUSERNAME"
+git config --global user.email "$GITEMAIL"
 
 # Git stuff
 if [[ $SETUPECHO = true ]]; then
