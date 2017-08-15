@@ -40,7 +40,7 @@ alias gs="git status"
 alias ls="ls --color"
 alias vi="vim"
 alias gc="git clean -f && git clean -f -d"
-alias drd="docker rmi \$(docker images -f dangling=true -q)"
+alias drd="docker rmi \\\$(docker images -f dangling=true -q)"
 
 # Git initial setup
 if [[ $SETUPECHO = true ]]; then
