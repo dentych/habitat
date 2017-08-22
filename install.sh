@@ -67,6 +67,8 @@ git config --global alias.b "branch"
 git config --global alias.logn "log --all --graph --oneline --decorate"
 git config --global alias.lognb "log --graph --oneline --decorate"
 
+git config --global core.editor "vim"
+
 # Set PS1
 # Download link: https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 if [[ $SETUPECHO = true ]]; then
