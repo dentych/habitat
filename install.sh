@@ -38,6 +38,7 @@ fi
 alias GIT="cd $GITDIR"
 alias gs="git status"
 alias ls="ls --color"
+alias l=" ls -lah"
 alias vi="vim"
 alias gc="git clean -f && git clean -f -d"
 alias drd="docker rmi \\\$(docker images -f dangling=true -q)"
