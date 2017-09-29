@@ -28,59 +28,20 @@ fi
 
 # Create setup bash script
 echo " - Generating bash setup script..."
-cat << EOF > $OUTFILE
-#!/bin/bash
-
-# Setup aliases
-if [[ $SETUPECHO = true ]]; then
-    echo "Setting up aliases..."
+echo "cat << EOF > $OUTFILE" > tmp.sh
+echo "#!/bin/bash" >> tmp.sh
+if [ $CYGWINPROMPT = "true" ]; then
+    cat ./cygwin/setup.sh >> tmp.sh
 fi
-alias GIT="cd $GITDIR"
-alias gs="git status"
-alias ls="ls --color"
-alias l=" ls -lah"
-alias vi="vim"
-alias gc="git clean -f && git clean -f -d"
-alias drd="docker rmi \\\$(docker images -f dangling=true -q)"
 
-# Git initial setup
-if [[ $SETUPECHO = true ]]; then
-    echo "Setting up git username and email..."
-fi
-git config --global user.name "$GITUSERNAME"
-git config --global user.email "$GITEMAIL"
+cat setup-files/alias.sh >> tmp.sh
+cat setup-files/git.sh >> tmp.sh
+cat setup-files/ps1.sh >> tmp.sh
+echo "EOF" >> tmp.sh
 
-# Git stuff
-if [[ $SETUPECHO = true ]]; then
-    echo "Setting up git aliases..."
-fi
-git config --global alias.cp "cherry-pick"
-git config --global alias.co "checkout"
-git config --global alias.cl "clone"
-git config --global alias.c "commit"
-git config --global alias.st "status -sb"
-git config --global alias.br "branch"
-git config --global alias.d "diff"
-git config --global alias.dc "diff --cached"
-git config --global alias.p "pull -p"
-git config --global alias.f "fetch -p"
-git config --global alias.b "branch"
-git config --global alias.logn "log --all --graph --oneline --decorate"
-git config --global alias.lognb "log --graph --oneline --decorate"
+source ./tmp.sh
 
-git config --global core.editor "vim"
-
-# Set PS1
-# Download link: https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-if [[ $SETUPECHO = true ]]; then
-    echo "Setting up PS1..."
-fi
-source ~/git-prompt.sh
-PS1='\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[92m\]\$(__git_ps1 " (%s)")\[\e[00m\] $ '
-if [[ $SETUPECHO = true ]]; then
-    echo "Bash setup complete!"
-fi
-EOF
+rm ./tmp.sh
 
 # Add source to bashrc, profile or whatever is setup
 for file in $BASHPROFILEFILES; do
