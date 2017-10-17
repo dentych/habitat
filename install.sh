@@ -32,6 +32,7 @@ echo "cat << EOF > $OUTFILE" > tmp.sh
 echo "#!/bin/bash" >> tmp.sh
 if [ $CYGWINPROMPT = "true" ]; then
     cat ./cygwin/setup.sh >> tmp.sh
+    source cygwin/run.sh install
 fi
 
 cat setup-files/alias.sh >> tmp.sh

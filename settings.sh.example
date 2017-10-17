@@ -19,3 +19,6 @@ BASHPROFILEFILES=".bashrc"
 
 # Setup echo on (true) or off (false)
 SETUPECHO=false
+
+# Is bash a cygwin prompt?
+CYGWINPROMPT=false

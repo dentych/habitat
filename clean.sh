@@ -18,8 +18,12 @@ fi
 for file in $FILESTOCOPY; do
     if [[ -f ~/$file ]]; then
         echo " - Removing $file from homedir..."
-        rm ~/$file
+        rm -f ~/$file
     fi
 done
+
+if [ -n "$CYGWINPROMPT" ]; then
+    source ./cygwin/run.sh clean
+fi
 
 echo "Cleanup done!"
