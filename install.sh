@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [[ ! -f settings.sh ]]; then
     echo "!! ERROR WHILE RUNNING INSTALL.SH !!"
@@ -6,7 +6,7 @@ if [[ ! -f settings.sh ]]; then
     exit 1
 fi
 
-source settings.sh
+source ./settings.sh
 
 echo "Starting: installation!"
 

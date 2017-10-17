@@ -12,13 +12,13 @@ function install() {
     fi
 
     echo "Unpacking winpty..."
-    tar -xzf $WINPTY_FILE.tar.gz
+    tar -xzf ./$WINPTY_FILE.tar.gz
         
     echo "Moving files to /bin folder..."
-    mv $WINPTY_FILE/bin/* /bin/
+    mv ./$WINPTY_FILE/bin/* /bin/
 
     echo "Removing winpty temp folder..."
-    rm -rf $WINPTY_FILE
+    rm -rf ./$WINPTY_FILE
 
     echo "Winpty installed!"
 }

@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 
-if [[ ! -f settings.sh ]]; then
+if [[ ! -f ./settings.sh ]]; then
     echo "!! ERROR WHILE RUNNING CLEAN.SH !!"
     echo "No settings.sh found!"
     exit 1
 fi
 
-source settings.sh
+source ./settings.sh
 
 echo "Starting: cleanup!"
 
