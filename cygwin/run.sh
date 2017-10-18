@@ -1,3 +1,5 @@
+#!/bin/sh
+
 WINPTY_VERSION=0.4.3
 WINPTY_FILE=winpty-$WINPTY_VERSION-cygwin-2.8.0-x64
 
