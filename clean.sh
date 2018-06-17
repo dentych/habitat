@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ ! -f ./settings.sh ]; then
     echo "!! ERROR WHILE RUNNING CLEAN.SH !!"

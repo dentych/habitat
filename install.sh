@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ ! -f settings.sh ]; then
     echo "!! ERROR WHILE RUNNING INSTALL.SH !!"
@@ -36,13 +36,15 @@ if [ $CYGWINPROMPT = "true" ]; then
 fi
 
 cat setup-files/alias.sh >> tmp.sh
-cat setup-files/git.sh >> tmp.sh
 cat setup-files/ps1.sh >> tmp.sh
 echo "EOF" >> tmp.sh
 
 . ./tmp.sh
 
 rm ./tmp.sh
+
+# Run through git setup
+source ./setup-files/git.sh
 
 # Add . to bashrc, profile or whatever is setup
 for file in $BASHPROFILEFILES; do

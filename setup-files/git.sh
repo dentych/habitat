@@ -1,14 +1,10 @@
 # Git initial setup
-if [[ $SETUPECHO = true ]]; then
-    echo "Setting up git username and email..."
-fi
+echo "Installing git username and email..."
 git config --global user.name "$GITUSERNAME"
 git config --global user.email "$GITEMAIL"
 
 # Git stuff
-if [[ $SETUPECHO = true ]]; then
-    echo "Setting up git aliases..."
-fi
+echo "Installing git aliases..."
 git config --global alias.cp "cherry-pick"
 git config --global alias.co "checkout"
 git config --global alias.cl "clone"
