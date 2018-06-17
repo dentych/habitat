@@ -40,6 +40,7 @@ alias gs="git status"
 alias ls="ls --color"
 alias vi="vim"
 alias gc="git clean -f && git clean -f -d"
+alias drd="docker rmi \$(docker images -f dangling=true -q)"
 
 # Git initial setup
 if [[ ! -f $HOMEDIR/.gitconfig ]]; then
@@ -57,7 +58,7 @@ fi
 git config --global alias.cp "cherry-pick"
 git config --global alias.co "checkout"
 git config --global alias.cl "clone"
-git config --global alias.ci "commit"
+git config --global alias.c "commit"
 git config --global alias.st "status -sb"
 git config --global alias.br "branch"
 git config --global alias.d "diff"
@@ -65,6 +66,8 @@ git config --global alias.dc "diff --cached"
 git config --global alias.p "pull -p"
 git config --global alias.f "fetch -p"
 git config --global alias.b "branch"
+git config --global alias.logn "log --all --graph --oneline --decorate"
+git config --global alias.lognb "log --graph --oneline --decorate"
 
 # Set PS1
 # Download link: https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
