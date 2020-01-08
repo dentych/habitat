@@ -17,4 +17,3 @@ hi DiffAdd ctermbg=darkblue
 hi DiffChange ctermbg=darkblue
 hi DiffDelete ctermbg=darkred
 hi difftext cterm=none ctermfg=white ctermbg=22
-
