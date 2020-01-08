@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -29,7 +30,7 @@ func (v Vim) Uninstall(configuration Configuration) {
 	v.printer.Print("Uninstalling...")
 	v.printer.Print("Removing .vimrc file to HomeDir")
 	err := os.Remove(v.filePath())
-	if err != nil {
+	if err != nil && !errors.Is(err, os.ErrNotExist){
 		log.Fatalln("Error uninstalling vim.", err)
 	}
 	v.printer.Print("Done!")

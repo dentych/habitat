@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -29,7 +30,7 @@ func (t Tmux) Uninstall(conf Configuration) {
 	t.printer.Print("Uninstalling...")
 	t.printer.Print("Removing .tmux.conf file to HomeDir")
 	err := os.Remove(t.filePath())
-	if err != nil {
+	if err != nil && !errors.Is(err, os.ErrNotExist){
 		log.Fatalln("Tmux uninstallation error.", err)
 	}
 	t.printer.Print("Done!")

@@ -4,13 +4,10 @@ import "fmt"
 
 type Module interface {
 	Name() string
-
 	// Installation script for the module
 	Install(configuration Configuration)
-
 	// Uninstallation script for the module
 	Uninstall(configuration Configuration)
-
 	SetPrinter(printer *Printer)
 }
 

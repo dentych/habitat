@@ -2,7 +2,6 @@ package confwiz
 
 import (
 	"bufio"
-	"bytes"
 	"env/cmd/internal"
 	"fmt"
 	"os"
@@ -31,35 +30,26 @@ func (w *ConfigurationWizard) Configure() internal.Configuration {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Printf("### Modules enabled (default marked with caps) ###\n")
-	fmt.Printf("Git (%s): ", bla(w.configuration.ModulesEnabled.Git))
-	if scanner.Scan() {
-		scannerOutput = strings.Trim(scanner.Text(), " ")
-		w.configuration.ModulesEnabled.Git = parseYesNo(scannerOutput)
-	}
-
-	fmt.Printf("Tmux (%s): ", bla(w.configuration.ModulesEnabled.Tmux))
-	if scanner.Scan() {
-		scannerOutput = strings.Trim(scanner.Text(), " ")
-		w.configuration.ModulesEnabled.Tmux = parseYesNo(scannerOutput)
-	}
-
-	fmt.Printf("Vim (%s): ", bla(w.configuration.ModulesEnabled.Vim))
-	if scanner.Scan() {
-		scannerOutput = strings.Trim(scanner.Text(), " ")
-		w.configuration.ModulesEnabled.Vim = parseYesNo(scannerOutput)
-	}
+	moduleEnabled("Git", scanner, &w.configuration.ModulesEnabled.Git)
+	moduleEnabled("Tmux", scanner, &w.configuration.ModulesEnabled.Tmux)
+	moduleEnabled("Vim", scanner, &w.configuration.ModulesEnabled.Vim)
+	moduleEnabled("Bash", scanner, &w.configuration.ModulesEnabled.Bash)
 
 	fmt.Printf("### Git ###\n")
 	fmt.Printf("Name (%s): ", w.configuration.Git.Name)
 	if scanner.Scan() {
 		scannerOutput = strings.Trim(scanner.Text(), " ")
-		w.configuration.Git.Name = scannerOutput
+		if scannerOutput != "" {
+			w.configuration.Git.Name = scannerOutput
+		}
 	}
 
 	fmt.Printf("Email (%s): ", w.configuration.Git.Email)
 	if scanner.Scan() {
 		scannerOutput = strings.Trim(scanner.Text(), " ")
-		w.configuration.Git.Email = scannerOutput
+		if scannerOutput != "" {
+			w.configuration.Git.Email = scannerOutput
+		}
 	}
 
 	fmt.Println()
@@ -81,14 +71,13 @@ func parseYesNo(value string) bool {
 	return false
 }
 
-func cleanText(text string) string {
-	validChars := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@.-_"
-	var output bytes.Buffer
-	for _, v := range text {
-		if strings.ContainsRune(validChars, v) {
-			output.WriteRune(v)
+func moduleEnabled(name string, scanner *bufio.Scanner, element *bool) {
+	scannerOutput := ""
+	fmt.Printf("%s (%s): ", name, bla(*element))
+	if scanner.Scan() {
+		scannerOutput = strings.Trim(scanner.Text(), " ")
+		if scannerOutput != "" {
+			*element = parseYesNo(scannerOutput)
 		}
 	}
-
-	return output.String()
 }
