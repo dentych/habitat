@@ -12,12 +12,12 @@ type Vim struct {
 }
 
 func (Vim) Name() string {
-	return "Vim"
+	return "vim"
 }
 
 func (v Vim) Install(configuration Configuration) {
 	v.printer.Print("Installing...")
-	v.printer.Print("Adding .vimrc file to homedir")
+	v.printer.Print("Adding .vimrc file to HomeDir")
 	err := ioutil.WriteFile(v.filePath(), []byte(VimConf), 644)
 	if err != nil {
 		log.Fatalln("Error installing vim.", err)
@@ -27,7 +27,7 @@ func (v Vim) Install(configuration Configuration) {
 
 func (v Vim) Uninstall(configuration Configuration) {
 	v.printer.Print("Uninstalling...")
-	v.printer.Print("Removing .vimrc file to homedir")
+	v.printer.Print("Removing .vimrc file to HomeDir")
 	err := os.Remove(v.filePath())
 	if err != nil {
 		log.Fatalln("Error uninstalling vim.", err)
@@ -40,5 +40,5 @@ func (v *Vim) SetPrinter(printer *Printer) {
 }
 
 func (Vim) filePath() string {
-	return fmt.Sprintf("%s/%s", homedir, VimConfFileName)
+	return fmt.Sprintf("%s/%s", HomeDir, VimConfFileName)
 }

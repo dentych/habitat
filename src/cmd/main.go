@@ -2,7 +2,11 @@ package main
 
 import (
 	"env/cmd/internal"
+	"env/cmd/internal/confwiz"
+	"errors"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
 )
 
@@ -14,23 +18,59 @@ func main() {
 
 	modules := buildModules()
 
-	conf := internal.Configuration{}
-
 	switch os.Args[1] {
 	case "install":
-		installEnv(modules, conf)
+		installEnv(modules, buildConfig())
 	case "remove":
-		removeEnv(modules, conf)
+		removeEnv(modules, buildConfig())
+	case "reconfigure":
+		fmt.Printf("Reconfiguring ENV\n\n")
+		wizard := confwiz.New(nil)
+		conf := wizard.Configure()
+		writeError := ioutil.WriteFile(internal.HomeDir + "/.env.conf", conf.Marshal(), 644)
+		if writeError != nil {
+			log.Fatalln("Couldn't save configuration file.", writeError)
+		}
 	default:
 		fmt.Println("Invalid subcommand.")
 		os.Exit(1)
 	}
 }
 
+func buildConfig() internal.Configuration {
+	fmt.Println("Looking for existing config file.")
+	content, readError := ioutil.ReadFile(internal.HomeDir + "/.env.conf")
+	if readError == nil {
+		fmt.Println("Found config file!")
+		conf := internal.Configuration{}
+		unmarshalError := conf.Unmarshal(content)
+		if unmarshalError != nil {
+			log.Fatalln("Error when reading .env.conf. You might need to delete the file.", unmarshalError)
+		}
+
+		return conf
+	} else {
+		if errors.Is(readError, os.ErrNotExist) {
+			fmt.Println("Didn't file a config file. Starting configuration wizard!")
+			wizard := confwiz.New(nil)
+			conf := wizard.Configure()
+			writeError := ioutil.WriteFile(internal.HomeDir + "/.env.conf", conf.Marshal(), 644)
+			if writeError != nil {
+				log.Fatalln("Couldn't save configuration file.", writeError)
+			}
+			return conf
+		} else {
+			log.Fatalln("Error when reading configuration file.", readError)
+		}
+	}
+	return internal.Configuration{}
+}
+
 func buildModules() []internal.Module {
 	modules := make([]internal.Module, 0, 10)
 	modules = append(modules, &internal.Tmux{})
 	modules = append(modules, &internal.Vim{})
+	modules = append(modules, &internal.Git{})
 
 	return modules
 }

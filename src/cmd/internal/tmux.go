@@ -12,12 +12,12 @@ type Tmux struct {
 }
 
 func (Tmux) Name() string {
-	return "Tmux"
+	return "tmux"
 }
 
 func (t Tmux) Install(conf Configuration) {
 	t.printer.Print("Installing...")
-	t.printer.Print("Adding .tmux.conf file to homedir")
+	t.printer.Print("Adding .tmux.conf file to HomeDir")
 	err := ioutil.WriteFile(t.filePath(), []byte(TmuxConf), 644)
 	if err != nil {
 		log.Fatalln("Tmux installation failed.", err)
@@ -27,7 +27,7 @@ func (t Tmux) Install(conf Configuration) {
 
 func (t Tmux) Uninstall(conf Configuration) {
 	t.printer.Print("Uninstalling...")
-	t.printer.Print("Removing .tmux.conf file to homedir")
+	t.printer.Print("Removing .tmux.conf file to HomeDir")
 	err := os.Remove(t.filePath())
 	if err != nil {
 		log.Fatalln("Tmux uninstallation error.", err)
@@ -40,5 +40,5 @@ func (t *Tmux) SetPrinter(printer *Printer) {
 }
 
 func (Tmux) filePath() string {
-	return fmt.Sprintf("%s/%s", homedir, TmuxConfFileName)
+	return fmt.Sprintf("%s/%s", HomeDir, TmuxConfFileName)
 }
