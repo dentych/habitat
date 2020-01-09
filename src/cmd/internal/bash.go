@@ -26,7 +26,7 @@ type Bash struct {
 }
 
 func (Bash) Name() string {
-	return "Bash"
+	return "bash"
 }
 
 func (b Bash) Install(configuration Configuration) {
