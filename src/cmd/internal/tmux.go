@@ -19,7 +19,7 @@ func (Tmux) Name() string {
 func (t Tmux) Install(conf Configuration) {
 	t.printer.Print("Installing...")
 	t.printer.Print("Adding .tmux.conf file to HomeDir")
-	err := ioutil.WriteFile(t.filePath(), []byte(TmuxConf), 644)
+	err := ioutil.WriteFile(t.filePath(), []byte(TmuxConf), 0644)
 	if err != nil {
 		log.Fatalln("Tmux installation failed.", err)
 	}

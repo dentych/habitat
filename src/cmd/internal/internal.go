@@ -22,7 +22,7 @@ func addFileToBashrc(filename string) {
 	content, err := ioutil.ReadFile(bashrcPath)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
-			err = ioutil.WriteFile(bashrcPath, []byte(strToAppend), 644)
+			err = ioutil.WriteFile(bashrcPath, []byte(strToAppend), 0644)
 			if err == nil {
 				return
 			}
@@ -30,7 +30,7 @@ func addFileToBashrc(filename string) {
 		log.Fatalln("Could not write bashrc file", err)
 	} else {
 		if !strings.Contains(string(content), filename) {
-			f, fileErr := os.OpenFile(bashrcPath, os.O_APPEND | os.O_WRONLY, 644)
+			f, fileErr := os.OpenFile(bashrcPath, os.O_APPEND | os.O_WRONLY, 0644)
 			if fileErr != nil {
 				log.Fatalln("Could not write bashrc file [2]", fileErr)
 			}

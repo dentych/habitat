@@ -39,7 +39,7 @@ func main() {
 		fmt.Printf("Reconfiguring ENV\n\n")
 		wizard := confwiz.New(&conf)
 		conf := wizard.Configure()
-		writeError := ioutil.WriteFile(EnvConfFilePath, conf.Marshal(), 644)
+		writeError := ioutil.WriteFile(EnvConfFilePath, conf.Marshal(), 0644)
 		if writeError != nil {
 			log.Fatalln("Couldn't save configuration file.", writeError)
 		}
@@ -50,6 +50,7 @@ func main() {
 		}
 	default:
 		fmt.Println("Invalid subcommand.")
+		fmt.Println("Valid subcommands are: install, remove, reconfigure, removeconf")
 		os.Exit(1)
 	}
 }
@@ -72,7 +73,7 @@ func buildConfig() internal.Configuration {
 			fmt.Println("Didn't file a config file. Starting configuration wizard!")
 			wizard := confwiz.New(nil)
 			conf := wizard.Configure()
-			writeError := ioutil.WriteFile(EnvConfFilePath, conf.Marshal(), 644)
+			writeError := ioutil.WriteFile(EnvConfFilePath, conf.Marshal(), 0644)
 			if writeError != nil {
 				log.Fatalln("Couldn't save configuration file.", writeError)
 			}

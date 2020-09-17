@@ -19,7 +19,7 @@ func (Vim) Name() string {
 func (v Vim) Install(configuration Configuration) {
 	v.printer.Print("Installing...")
 	v.printer.Print("Adding .vimrc file to HomeDir")
-	err := ioutil.WriteFile(v.filePath(), []byte(VimConf), 644)
+	err := ioutil.WriteFile(v.filePath(), []byte(VimConf), 0644)
 	if err != nil {
 		log.Fatalln("Error installing vim.", err)
 	}

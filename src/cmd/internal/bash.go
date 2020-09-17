@@ -45,9 +45,9 @@ func (b Bash) Install(configuration Configuration) {
 	output.WriteString("PS1='\\[\\e[32m\\]\\u@\\h \\[\\e[33m\\]\\w\\[\\e[92m\\]$(__git_ps1 \" (%s)\")\\[\\e[00m\\] $ '\n")
 
 	b.printer.Print("Creating git prompt script file")
-	err1 := ioutil.WriteFile(fmt.Sprintf("%s/%s", HomeDir, gitPromptFileName), []byte(GitPrompt), 644)
+	err1 := ioutil.WriteFile(fmt.Sprintf("%s/%s", HomeDir, gitPromptFileName), []byte(GitPrompt), 0644)
 	b.printer.Print("Creating bash setup script file")
-	err2 := ioutil.WriteFile(fmt.Sprintf("%s/%s", HomeDir, bashFileName), output.Bytes(), 644)
+	err2 := ioutil.WriteFile(fmt.Sprintf("%s/%s", HomeDir, bashFileName), output.Bytes(), 0644)
 	if err1 != nil || err2 != nil {
 		log.Fatalln("Could not write files:", err1, err2)
 	}
