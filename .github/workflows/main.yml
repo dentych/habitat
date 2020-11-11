@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build for Windows
+        env:
+          GOOS: windows
+          GOARCH: amd64
+        run: go build ./cmd/env
+      - name: Build for Linux
+        env:
+          GOOS: linux
+          GOARCH: amd64
+        run: go build ./cmd/env
