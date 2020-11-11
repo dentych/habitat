@@ -4,3 +4,6 @@
 settings.sh
 
 *.tar.gz
+
+env
+env.exe
