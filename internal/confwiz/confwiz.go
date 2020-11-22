@@ -2,8 +2,8 @@ package confwiz
 
 import (
 	"bufio"
-	"env/cmd/internal"
 	"fmt"
+	"gitlab.com/dentych/env/internal"
 	"os"
 	"strings"
 )
