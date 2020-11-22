@@ -16,6 +16,7 @@ func NewMainMenu() *MainMenu {
 		{Key: '1', Description: "Configuration", Handler: menu.configHandler},
 		{Key: '2', Description: "Git module", Handler: menu.gitHandler},
 		{Key: '3', Description: "Bash module", Handler: menu.bashHandler},
+		{Key: '4', Description: "Tmux module", Handler: menu.tmuxHandler},
 		{Key: 'q', Description: "Quit", Handler: menu.quitHandler},
 	}
 
@@ -38,4 +39,8 @@ func (m *MainMenu) gitHandler() Menu {
 
 func (m *MainMenu) bashHandler() Menu {
 	return NewBashMenu(m)
+}
+
+func (m *MainMenu) tmuxHandler() Menu {
+	return NewTmuxMenu(m)
 }
