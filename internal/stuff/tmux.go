@@ -1,8 +1,9 @@
-package internal
+package stuff
 
 import (
 	"errors"
 	"fmt"
+	"gitlab.com/dentych/env/internal/configuration"
 	"io/ioutil"
 	"log"
 	"os"
@@ -16,7 +17,7 @@ func (Tmux) Name() string {
 	return "tmux"
 }
 
-func (t Tmux) Install(conf Configuration) {
+func (t Tmux) Install(conf configuration.Configuration) {
 	t.printer.Print("Installing...")
 	t.printer.Print("Adding .tmux.conf file to HomeDir")
 	err := ioutil.WriteFile(t.filePath(), []byte(TmuxConf), 0644)
@@ -26,7 +27,7 @@ func (t Tmux) Install(conf Configuration) {
 	t.printer.Print("Done!")
 }
 
-func (t Tmux) Uninstall(conf Configuration) {
+func (t Tmux) Uninstall(conf configuration.Configuration) {
 	t.printer.Print("Uninstalling...")
 	t.printer.Print("Removing .tmux.conf file to HomeDir")
 	err := os.Remove(t.filePath())

@@ -1,8 +1,9 @@
-package internal
+package stuff
 
 import (
 	"errors"
 	"fmt"
+	"gitlab.com/dentych/env/internal/configuration"
 	"io/ioutil"
 	"log"
 	"os"
@@ -16,7 +17,7 @@ func (Vim) Name() string {
 	return "vim"
 }
 
-func (v Vim) Install(configuration Configuration) {
+func (v Vim) Install(configuration configuration.Configuration) {
 	v.printer.Print("Installing...")
 	v.printer.Print("Adding .vimrc file to HomeDir")
 	err := ioutil.WriteFile(v.filePath(), []byte(VimConf), 0644)
@@ -26,7 +27,7 @@ func (v Vim) Install(configuration Configuration) {
 	v.printer.Print("Done!")
 }
 
-func (v Vim) Uninstall(configuration Configuration) {
+func (v Vim) Uninstall(configuration configuration.Configuration) {
 	v.printer.Print("Uninstalling...")
 	v.printer.Print("Removing .vimrc file to HomeDir")
 	err := os.Remove(v.filePath())

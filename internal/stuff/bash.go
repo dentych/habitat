@@ -1,8 +1,9 @@
-package internal
+package stuff
 
 import (
 	"bytes"
 	"fmt"
+	"gitlab.com/dentych/env/internal/configuration"
 	"io/ioutil"
 	"log"
 	"os"
@@ -29,7 +30,7 @@ func (Bash) Name() string {
 	return "bash"
 }
 
-func (b Bash) Install(configuration Configuration) {
+func (b Bash) Install(configuration configuration.Configuration) {
 	b.printer.Print("Installing...")
 	b.printer.Print("Generating bash aliases and PS1 config")
 	var output bytes.Buffer
@@ -57,7 +58,7 @@ func (b Bash) Install(configuration Configuration) {
 	b.printer.Print("Done!")
 }
 
-func (Bash) Uninstall(configuration Configuration) {
+func (Bash) Uninstall(configuration configuration.Configuration) {
 	_ = os.Remove(fmt.Sprintf("%s/%s", HomeDir, gitPromptFileName))
 	_ = os.Remove(fmt.Sprintf("%s/%s", HomeDir, bashFileName))
 }

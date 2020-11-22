@@ -1,7 +1,8 @@
-package internal
+package stuff
 
 import (
 	"errors"
+	"gitlab.com/dentych/env/internal/configuration"
 	"log"
 	"os/exec"
 )
@@ -32,7 +33,7 @@ func (Git) Name() string {
 	return "git"
 }
 
-func (g Git) Install(configuration Configuration) {
+func (g Git) Install(configuration configuration.Configuration) {
 	g.printer.Print("Installing...")
 	if !gitExists() {
 		log.Fatalln("Git command not found. Please install git to use this module.")
@@ -50,7 +51,7 @@ func (g Git) Install(configuration Configuration) {
 	g.printer.Print("Done!")
 }
 
-func (Git) Uninstall(configuration Configuration) {
+func (Git) Uninstall(configuration configuration.Configuration) {
 	executeCommand("--unset", "user.name")
 	executeCommand("--unset", "user.email")
 

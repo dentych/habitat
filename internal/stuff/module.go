@@ -1,13 +1,16 @@
-package internal
+package stuff
 
-import "fmt"
+import (
+	"fmt"
+	"gitlab.com/dentych/env/internal/configuration"
+)
 
 type Module interface {
 	Name() string
 	// Installation script for the module
-	Install(configuration Configuration)
+	Install(configuration configuration.Configuration)
 	// Uninstallation script for the module
-	Uninstall(configuration Configuration)
+	Uninstall(configuration configuration.Configuration)
 	SetPrinter(printer *Printer)
 }
 
