@@ -1,8 +1,9 @@
-package stuff
+package modules
 
 import (
 	"errors"
 	"fmt"
+	"gitlab.com/dentych/env/internal"
 	"gitlab.com/dentych/env/internal/configuration"
 	"io/ioutil"
 	"log"
@@ -10,7 +11,6 @@ import (
 )
 
 type Vim struct {
-	printer *Printer
 }
 
 func (Vim) Name() string {
@@ -18,29 +18,25 @@ func (Vim) Name() string {
 }
 
 func (v Vim) Install(configuration configuration.Configuration) {
-	v.printer.Print("Installing...")
-	v.printer.Print("Adding .vimrc file to HomeDir")
-	err := ioutil.WriteFile(v.filePath(), []byte(VimConf), 0644)
+	fmt.Println("Installing...")
+	fmt.Println("Adding .vimrc file to HomeDir")
+	err := ioutil.WriteFile(v.filePath(), []byte(internal.VimConf), 0644)
 	if err != nil {
 		log.Fatalln("Error installing vim.", err)
 	}
-	v.printer.Print("Done!")
+	fmt.Println("Done!")
 }
 
 func (v Vim) Uninstall(configuration configuration.Configuration) {
-	v.printer.Print("Uninstalling...")
-	v.printer.Print("Removing .vimrc file to HomeDir")
+	fmt.Println("Uninstalling...")
+	fmt.Println("Removing .vimrc file to HomeDir")
 	err := os.Remove(v.filePath())
 	if err != nil && !errors.Is(err, os.ErrNotExist){
 		log.Fatalln("Error uninstalling vim.", err)
 	}
-	v.printer.Print("Done!")
-}
-
-func (v *Vim) SetPrinter(printer *Printer) {
-	v.printer = printer
+	fmt.Println("Done!")
 }
 
 func (Vim) filePath() string {
-	return fmt.Sprintf("%s/%s", HomeDir, VimConfFileName)
+	return fmt.Sprintf("%s/%s", internal.HomeDir, internal.VimConfFileName)
 }

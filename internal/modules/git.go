@@ -1,7 +1,8 @@
-package stuff
+package modules
 
 import (
 	"errors"
+	"fmt"
 	"gitlab.com/dentych/env/internal/configuration"
 	"log"
 	"os/exec"
@@ -25,43 +26,42 @@ var gitAliases = map[string]string{
 	"alias.pushb": "!git push -u origin $(git rev-parse --abbrev-ref HEAD)",
 }
 
-type Git struct {
-	printer *Printer
+type git struct {
 }
 
-func (Git) Name() string {
+func NewGitModule() Module {
+	return git{}
+}
+
+func (git) Name() string {
 	return "git"
 }
 
-func (g Git) Install(configuration configuration.Configuration) {
-	g.printer.Print("Installing...")
+func (g git) Install() {
+	fmt.Println("Installing...")
 	if !gitExists() {
-		log.Fatalln("Git command not found. Please install git to use this module.")
+		log.Fatalln("git command not found. Please install git to use this module.")
 	}
 
-	g.printer.Print("Setting up username and email")
-	executeCommand("user.name", configuration.Git.Name)
-	executeCommand("user.email", configuration.Git.Email)
+	fmt.Println("Setting up username and email")
+	executeCommand("user.name", configuration.Config.Git.Name)
+	executeCommand("user.email", configuration.Config.Git.Email)
 
-	g.printer.Print("Setting up git aliases")
+	fmt.Println("Setting up git aliases")
 	for k, v := range gitAliases {
 		executeCommand(k, v)
 	}
 
-	g.printer.Print("Done!")
+	fmt.Println("Done!")
 }
 
-func (Git) Uninstall(configuration configuration.Configuration) {
+func (git) Uninstall() {
 	executeCommand("--unset", "user.name")
 	executeCommand("--unset", "user.email")
 
 	for k := range gitAliases {
 		executeCommand("--unset", k)
 	}
-}
-
-func (g *Git) SetPrinter(printer *Printer) {
-	g.printer = printer
 }
 
 func gitExists() bool {

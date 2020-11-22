@@ -1,4 +1,4 @@
-package stuff
+package internal
 
 import (
 	"errors"
@@ -16,9 +16,9 @@ func init() {
 	HomeDir = strings.ReplaceAll(HomeDir, "\\", "/") // Fuck u Windows
 }
 
-func addFileToBashrc(filename string) {
+func AddFileToBashrc(filepath string) {
 	bashrcPath := fmt.Sprintf("%s/.bashrc", HomeDir)
-	strToAppend := fmt.Sprintf("\n. ~/%s\n", filename)
+	strToAppend := fmt.Sprintf("\n. %s\n", filepath)
 	content, err := ioutil.ReadFile(bashrcPath)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
@@ -29,7 +29,7 @@ func addFileToBashrc(filename string) {
 		}
 		log.Fatalln("Could not write bashrc file", err)
 	} else {
-		if !strings.Contains(string(content), filename) {
+		if !strings.Contains(string(content), filepath) {
 			f, fileErr := os.OpenFile(bashrcPath, os.O_APPEND | os.O_WRONLY, 0644)
 			if fileErr != nil {
 				log.Fatalln("Could not write bashrc file [2]", fileErr)
@@ -38,7 +38,7 @@ func addFileToBashrc(filename string) {
 
 			_, writeErr := f.WriteString(strToAppend)
 			if writeErr != nil {
-				log.Fatalf("Could not add %s to bashrc file. Error: %s", filename, err)
+				log.Fatalf("Could not add %s to bashrc file. Error: %s", filepath, err)
 			}
 		}
 	}

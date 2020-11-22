@@ -28,6 +28,7 @@ func (m *DefaultMenu) FindOption(key byte) *Option {
 
 func (m *DefaultMenu) Execute() Menu {
 	terminal.Clear()
+	fmt.Println("---- " + m.Name + " ----")
 	m.PrintOptions()
 	input := terminal.ReadByte()
 	option := m.FindOption(input)

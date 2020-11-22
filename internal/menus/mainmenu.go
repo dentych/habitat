@@ -2,7 +2,6 @@ package menus
 
 import (
 	"fmt"
-	"gitlab.com/dentych/env/internal/terminal"
 	"os"
 )
 
@@ -16,6 +15,7 @@ func NewMainMenu() *MainMenu {
 	menu.Options = []Option{
 		{Key: '1', Description: "Configuration", Handler: menu.configHandler},
 		{Key: '2', Description: "Git module", Handler: menu.gitHandler},
+		{Key: '3', Description: "Bash module", Handler: menu.bashHandler},
 		{Key: 'q', Description: "Quit", Handler: menu.quitHandler},
 	}
 
@@ -32,12 +32,10 @@ func (m *MainMenu) configHandler() Menu {
 	return NewConfigMenu(m)
 }
 
-func (m *MainMenu) print() {
-	terminal.Clear()
-	m.PrintOptions()
+func (m *MainMenu) gitHandler() Menu {
+	return NewGitMenu(m)
 }
 
-func (m *MainMenu) gitHandler() Menu {
-	// TODO
-	panic("OMG")
+func (m *MainMenu) bashHandler() Menu {
+	return NewBashMenu(m)
 }
