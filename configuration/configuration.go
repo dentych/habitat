@@ -19,11 +19,6 @@ type Configuration struct {
 
 var Config Configuration
 
-func init() {
-	Config = Configuration{}
-	Config.Load()
-}
-
 func (c *Configuration) Load() {
 	data, err := ioutil.ReadFile(homeDir() + "/.env/config")
 	if err != nil {
