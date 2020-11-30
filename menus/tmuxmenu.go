@@ -1,10 +1,12 @@
 package menus
 
-import "gitlab.com/dentych/env/internal/modules"
+import (
+	"gitlab.com/dentych/env/modules"
+	"gitlab.com/dentych/env/terminal"
+)
 
 type TmuxMenu struct {
 	DefaultMenu
-	TmuxModule modules.Module
 }
 
 func NewTmuxMenu(parent Menu) *TmuxMenu {
@@ -16,13 +18,20 @@ func NewTmuxMenu(parent Menu) *TmuxMenu {
 		{Key: '2', Description: "Uninstall", Handler: menu.uninstall},
 		{Key: 'q', Description: "Back", Handler: menu.backHandler},
 	}
+	menu.Module = modules.Tmux{}
+
+	return &menu
 }
 
 func (m *TmuxMenu) install() Menu {
+	m.Module.Install()
+	terminal.Read()
 	return m
 }
 
 func (m *TmuxMenu) uninstall() Menu {
+	m.Module.Uninstall()
+	terminal.Read()
 	return m
 }
 

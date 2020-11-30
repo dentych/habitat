@@ -3,7 +3,7 @@ package modules
 import (
 	"errors"
 	"fmt"
-	"gitlab.com/dentych/env/internal"
+	"gitlab.com/dentych/env"
 	"io/ioutil"
 	"log"
 	"os"
@@ -19,7 +19,7 @@ func (Tmux) Name() string {
 func (t Tmux) Install() {
 	fmt.Println("Installing...")
 	fmt.Println("Adding .tmux.conf file to HomeDir")
-	err := ioutil.WriteFile(t.filePath(), []byte(internal.TmuxConf), 0644)
+	err := ioutil.WriteFile(t.filePath(), []byte(main.TmuxConf), 0644)
 	if err != nil {
 		log.Fatalln("Tmux installation failed.", err)
 	}
@@ -37,5 +37,5 @@ func (t Tmux) Uninstall() {
 }
 
 func (Tmux) filePath() string {
-	return fmt.Sprintf("%s/%s", internal.HomeDir, internal.TmuxConfFileName)
+	return fmt.Sprintf("%s/%s", main.HomeDir, main.TmuxConfFileName)
 }

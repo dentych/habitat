@@ -2,7 +2,8 @@ package menus
 
 import (
 	"fmt"
-	"gitlab.com/dentych/env/internal/terminal"
+	"gitlab.com/dentych/env/modules"
+	"gitlab.com/dentych/env/terminal"
 )
 
 var ErrEmptyInput = fmt.Errorf("empty input")
@@ -14,6 +15,7 @@ type Menu interface {
 type DefaultMenu struct {
 	Name    string
 	Parent  Menu
+	Module  modules.Module
 	Options []Option
 }
 
@@ -37,7 +39,6 @@ func (m *DefaultMenu) Execute() Menu {
 	}
 	return nil
 }
-
 
 func (m *DefaultMenu) PrintOptions() {
 	for _, v := range m.Options {

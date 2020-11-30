@@ -3,7 +3,7 @@ package modules
 import (
 	"errors"
 	"fmt"
-	"gitlab.com/dentych/env/internal/configuration"
+	"gitlab.com/dentych/env/configuration"
 	"log"
 	"os/exec"
 )

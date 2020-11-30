@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gitlab.com/dentych/env/internal/menus"
+	"gitlab.com/dentych/env/menus"
 )
 
 var currentMenu menus.Menu

@@ -1,4 +1,4 @@
-package internal
+package main
 
 const TmuxConfFileName = ".tmux.conf"
 const TmuxConf = `

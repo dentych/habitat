@@ -1,8 +1,8 @@
 package menus
 
 import (
-	"gitlab.com/dentych/env/internal/modules"
-	"gitlab.com/dentych/env/internal/terminal"
+	"gitlab.com/dentych/env/modules"
+	"gitlab.com/dentych/env/terminal"
 )
 
 type GitMenu struct {

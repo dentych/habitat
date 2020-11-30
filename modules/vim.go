@@ -3,8 +3,8 @@ package modules
 import (
 	"errors"
 	"fmt"
-	"gitlab.com/dentych/env/internal"
-	"gitlab.com/dentych/env/internal/configuration"
+	"gitlab.com/dentych/env"
+	"gitlab.com/dentych/env/configuration"
 	"io/ioutil"
 	"log"
 	"os"
@@ -20,7 +20,7 @@ func (Vim) Name() string {
 func (v Vim) Install(configuration configuration.Configuration) {
 	fmt.Println("Installing...")
 	fmt.Println("Adding .vimrc file to HomeDir")
-	err := ioutil.WriteFile(v.filePath(), []byte(internal.VimConf), 0644)
+	err := ioutil.WriteFile(v.filePath(), []byte(main.VimConf), 0644)
 	if err != nil {
 		log.Fatalln("Error installing vim.", err)
 	}
@@ -38,5 +38,5 @@ func (v Vim) Uninstall(configuration configuration.Configuration) {
 }
 
 func (Vim) filePath() string {
-	return fmt.Sprintf("%s/%s", internal.HomeDir, internal.VimConfFileName)
+	return fmt.Sprintf("%s/%s", main.HomeDir, main.VimConfFileName)
 }
