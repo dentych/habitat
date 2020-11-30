@@ -8,6 +8,8 @@ import (
 	"os"
 )
 
+const VimConfFileName = ".vimrc"
+
 type Vim struct {
 	homeDir string
 }

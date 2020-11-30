@@ -18,6 +18,7 @@ func NewMainMenu(homeDir string) *MainMenu {
 		{Key: '2', Description: "Git module", Handler: menu.gitHandler},
 		{Key: '3', Description: "Bash module", Handler: menu.bashHandler},
 		{Key: '4', Description: "Tmux module", Handler: menu.tmuxHandler},
+		{Key: '5', Description: "Vim module", Handler: menu.vimHandler},
 		{Key: 'q', Description: "Quit", Handler: menu.quitHandler},
 	}
 	menu.homeDir = homeDir
@@ -45,4 +46,8 @@ func (m *MainMenu) bashHandler() Menu {
 
 func (m *MainMenu) tmuxHandler() Menu {
 	return NewTmuxMenu(m, m.homeDir)
+}
+
+func (m *MainMenu) vimHandler() Menu {
+	return NewVimMenu(m, m.homeDir)
 }

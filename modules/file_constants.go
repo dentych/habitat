@@ -1,6 +1,5 @@
 package modules
 
-const TmuxConfFileName = ".tmux.conf"
 const TmuxConf = `
 #############################################
 # Nice tmux conf by Dentych.                #
@@ -47,7 +46,6 @@ bind -n M-Down select-pane -D
 set-option -g allow-rename off
 `
 
-const VimConfFileName = ".vimrc"
 const VimConf = `
 set tabstop=4
 set shiftwidth=4

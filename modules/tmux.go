@@ -8,6 +8,8 @@ import (
 	"os"
 )
 
+const TmuxConfFileName = ".tmux.conf"
+
 type Tmux struct {
 	homeDir string
 }
