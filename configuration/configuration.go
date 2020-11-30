@@ -25,9 +25,7 @@ func init() {
 }
 
 func (c *Configuration) Load() {
-	homeDir, _ := os.UserHomeDir()
-	homeDir = strings.Replace(homeDir, "\\", "/", -1)
-	data, err := ioutil.ReadFile(homeDir + "/.env/config")
+	data, err := ioutil.ReadFile(homeDir() + "/.env/config")
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
 			c.Save()
@@ -43,8 +41,7 @@ func (c *Configuration) Load() {
 }
 
 func (c *Configuration) Save() {
-	homeDir, _ := os.UserHomeDir()
-	err := ioutil.WriteFile(homeDir +  "/.env/config", Config.marshal(), 0644)
+	err := ioutil.WriteFile(homeDir() +  "/.env/config", Config.marshal(), 0644)
 	if err != nil {
 		log.Fatal("Failed to write configuration file: ", err)
 	}
@@ -61,4 +58,9 @@ func (c *Configuration) marshal() []byte {
 
 func (c *Configuration) unmarshal(data []byte) error {
 	return json.Unmarshal(data, c)
+}
+
+func homeDir() string {
+	homeDir, _ := os.UserHomeDir()
+	return strings.Replace(homeDir, "\\", "/", -1)
 }
