@@ -17,9 +17,7 @@ func NewConfigMenu(parent Menu) *ConfigMenu {
 	menu.Options = []Option{
 		{Key: '1', Description: "List all configuration values", Handler: menu.listAllConfigValues},
 		{Key: '2', Description: "Edit config values", Handler: menu.editConfigValues},
-		{Key: 'q', Description: "Back", Handler: func() Menu {
-			return parent
-		}},
+		{Key: 'q', Description: "Back", Handler: menu.Back},
 	}
 	return &menu
 }
@@ -34,7 +32,7 @@ func (m *ConfigMenu) listAllConfigValues() Menu {
 	fmt.Println()
 	fmt.Println("<enter> to go back")
 	fmt.Println()
-	terminal.Read()
+	terminal.ReadEnter()
 	return m
 }
 

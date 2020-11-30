@@ -37,3 +37,9 @@ func ReadByte() byte {
 	}
 	return 0
 }
+
+func ReadEnter() {
+	if scanner.Scan() {
+		return
+	}
+}

@@ -2,37 +2,24 @@ package menus
 
 import (
 	"gitlab.com/dentych/env/modules"
-	"gitlab.com/dentych/env/terminal"
 )
 
 type TmuxMenu struct {
 	DefaultMenu
 }
 
-func NewTmuxMenu(parent Menu) *TmuxMenu {
+func NewTmuxMenu(parent Menu, homeDir string) *TmuxMenu {
 	menu := TmuxMenu{}
 	menu.Name = "Tmux menu"
 	menu.Parent = parent
 	menu.Options = []Option{
-		{Key: '1', Description: "Install", Handler: menu.install},
-		{Key: '2', Description: "Uninstall", Handler: menu.uninstall},
+		{Key: '1', Description: "Install", Handler: menu.Install},
+		{Key: '2', Description: "Uninstall", Handler: menu.Uninstall},
 		{Key: 'q', Description: "Back", Handler: menu.backHandler},
 	}
-	menu.Module = modules.Tmux{}
+	menu.Module = modules.NewTmuxModule(homeDir)
 
 	return &menu
-}
-
-func (m *TmuxMenu) install() Menu {
-	m.Module.Install()
-	terminal.Read()
-	return m
-}
-
-func (m *TmuxMenu) uninstall() Menu {
-	m.Module.Uninstall()
-	terminal.Read()
-	return m
 }
 
 func (m *TmuxMenu) backHandler() Menu {

@@ -7,9 +7,10 @@ import (
 
 type MainMenu struct {
 	DefaultMenu
+	homeDir string
 }
 
-func NewMainMenu() *MainMenu {
+func NewMainMenu(homeDir string) *MainMenu {
 	menu := MainMenu{}
 	menu.Name = "Main menu"
 	menu.Options = []Option{
@@ -19,6 +20,7 @@ func NewMainMenu() *MainMenu {
 		{Key: '4', Description: "Tmux module", Handler: menu.tmuxHandler},
 		{Key: 'q', Description: "Quit", Handler: menu.quitHandler},
 	}
+	menu.homeDir = homeDir
 
 	return &menu
 }
@@ -38,9 +40,9 @@ func (m *MainMenu) gitHandler() Menu {
 }
 
 func (m *MainMenu) bashHandler() Menu {
-	return NewBashMenu(m)
+	return NewBashMenu(m, m.homeDir)
 }
 
 func (m *MainMenu) tmuxHandler() Menu {
-	return NewTmuxMenu(m)
+	return NewTmuxMenu(m, m.homeDir)
 }

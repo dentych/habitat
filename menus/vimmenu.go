@@ -4,11 +4,11 @@ import (
 	"gitlab.com/dentych/env/modules"
 )
 
-type GitMenu struct {
+type VimMenu struct {
 	DefaultMenu
 }
 
-func NewGitMenu(parent Menu) *GitMenu {
+func NewVimMenu(parent Menu, homeDir string) *GitMenu {
 	menu := GitMenu{}
 	menu.Name = "git menu"
 	menu.Parent = parent
@@ -17,7 +17,7 @@ func NewGitMenu(parent Menu) *GitMenu {
 		{Key: '2', Description: "Uninstall", Handler: menu.Uninstall},
 		{Key: 'q', Description: "Back", Handler: menu.Back},
 	}
-	menu.Module = modules.NewGitModule()
+	menu.Module = modules.NewVimModule(homeDir)
 
 	return &menu
 }

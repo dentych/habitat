@@ -2,36 +2,22 @@ package menus
 
 import (
 	"gitlab.com/dentych/env/modules"
-	"gitlab.com/dentych/env/terminal"
 )
 
 type BashMenu struct {
 	DefaultMenu
-	BashModule modules.Module
 }
 
-func NewBashMenu(parent Menu) *BashMenu {
+func NewBashMenu(parent Menu, homeDir string) *BashMenu {
 	menu := BashMenu{}
 	menu.Name = "Bash menu"
 	menu.Parent = parent
-	menu.BashModule = modules.NewBashModule()
+	menu.Module = modules.NewBashModule(homeDir)
 	menu.Options = []Option{
-		{Key: '1', Description: "Install", Handler: menu.install},
-		{Key: '2', Description: "Uninstall", Handler: menu.uninstall},
-		{Key: 'q', Description: "Back", Handler: func() Menu { return menu.Parent }},
+		{Key: '1', Description: "Install", Handler: menu.Install},
+		{Key: '2', Description: "Uninstall", Handler: menu.Uninstall},
+		{Key: 'q', Description: "Back", Handler: menu.Back},
 	}
 
 	return &menu
-}
-
-func (m *BashMenu) install() Menu {
-	m.BashModule.Install()
-	terminal.Read()
-	return m
-}
-
-func (m *BashMenu) uninstall() Menu {
-	m.BashModule.Uninstall()
-	terminal.Read()
-	return m
 }

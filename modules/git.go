@@ -43,12 +43,14 @@ func (g git) Install() {
 		log.Fatalln("git command not found. Please install git to use this module.")
 	}
 
-	fmt.Println("Setting up username and email")
+	fmt.Println("Setting user.name")
 	executeCommand("user.name", configuration.Config.Git.Name)
+	fmt.Println("Setting user.email")
 	executeCommand("user.email", configuration.Config.Git.Email)
 
 	fmt.Println("Setting up git aliases")
 	for k, v := range gitAliases {
+		fmt.Println("Setting", k)
 		executeCommand(k, v)
 	}
 
@@ -56,12 +58,17 @@ func (g git) Install() {
 }
 
 func (git) Uninstall() {
+	fmt.Println("Uninstalling...")
+	fmt.Println("Unsetting user.name")
 	executeCommand("--unset", "user.name")
+	fmt.Println("Unsetting user.email")
 	executeCommand("--unset", "user.email")
 
 	for k := range gitAliases {
+		fmt.Println("Unsetting", k)
 		executeCommand("--unset", k)
 	}
+	fmt.Println("Uninstallation done!")
 }
 
 func gitExists() bool {
@@ -83,6 +90,8 @@ func executeCommand(args ...string) {
 	cmd := exec.Command("git", fullArgs...)
 	err := cmd.Run()
 	if err != nil {
-		log.Fatalf("Failed to run command '%s': %s", cmd.String(), err)
+		if cmd.ProcessState.ExitCode() != 5 {
+			log.Fatalf("Failed to run command '%s': %s", cmd.String(), err)
+		}
 	}
 }

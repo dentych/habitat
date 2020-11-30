@@ -28,6 +28,22 @@ func (m *DefaultMenu) FindOption(key byte) *Option {
 	return nil
 }
 
+func (m *DefaultMenu) Install() Menu {
+	m.Module.Install()
+	terminal.ReadEnter()
+	return m
+}
+
+func (m *DefaultMenu) Uninstall() Menu {
+	m.Module.Uninstall()
+	terminal.ReadEnter()
+	return m
+}
+
+func (m *DefaultMenu) Back() Menu {
+	return m.Parent
+}
+
 func (m *DefaultMenu) Execute() Menu {
 	terminal.Clear()
 	fmt.Println("---- " + m.Name + " ----")

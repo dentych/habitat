@@ -18,7 +18,7 @@ func NewEditConfigMenu(parent Menu) *EditConfigMenu {
 		{Key: '1', Description: "Git - Name", Handler: func() Menu { return menu.editConfigValue(&configuration.Config.Git.Name) }},
 		{Key: '2', Description: "Git - Email", Handler: func() Menu { return menu.editConfigValue(&configuration.Config.Git.Email) }},
 		{Key: '3', Description: "Git - Directory", Handler: func() Menu { return menu.editConfigValue(&configuration.Config.Git.Directory) }},
-		{Key: 'q', Description: "Back", Handler: func() Menu { return menu.Parent }},
+		{Key: 'q', Description: "Back", Handler: menu.Back},
 	}
 
 	return &menu
