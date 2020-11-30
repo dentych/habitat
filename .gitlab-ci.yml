@@ -14,6 +14,7 @@ build linux/amd64:
   artifacts:
     paths:
       - env
+    expire_in: 1 minute
 
 build windows/amd64:
   stage: build
@@ -23,6 +24,7 @@ build windows/amd64:
   artifacts:
     paths:
       - env.exe
+    expire_in: 1 minute
 
 upload artifacts:
   stage: upload
