@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 )
 
 type Configuration struct {
@@ -25,6 +26,7 @@ func init() {
 
 func (c *Configuration) Load() {
 	homeDir, _ := os.UserHomeDir()
+	homeDir = strings.Replace(homeDir, "\\", "/", -1)
 	data, err := ioutil.ReadFile(homeDir + "/.env/config")
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
