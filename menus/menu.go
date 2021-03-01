@@ -31,13 +31,13 @@ func (m *DefaultMenu) FindOption(key byte) *Option {
 func (m *DefaultMenu) Install() Menu {
 	m.Module.Install()
 	terminal.ReadEnter()
-	return m
+	return m.Parent
 }
 
 func (m *DefaultMenu) Uninstall() Menu {
 	m.Module.Uninstall()
 	terminal.ReadEnter()
-	return m
+	return m.Parent
 }
 
 func (m *DefaultMenu) Back() Menu {
