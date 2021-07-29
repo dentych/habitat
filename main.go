@@ -1,45 +1,85 @@
 package main
 
 import (
-	"errors"
-	"gitlab.com/dentych/habitat/configuration"
-	"gitlab.com/dentych/habitat/menus"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"strings"
+
+	_ "embed"
+
+	"gitlab.com/dentych/habitat/vscode"
 )
 
-var currentMenu menus.Menu
-
 func main() {
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		log.Fatal("Could not get home directory of user", err)
-	}
-	ensureEnvFolderExists(homeDir)
-	configuration.Config = configuration.Configuration{}
-	configuration.Config.Load()
-	homeDir = strings.Replace(homeDir, "\\", "/", -1)
-	for {
-		if currentMenu == nil {
-			currentMenu = menus.NewMainMenu(homeDir)
-		}
-		nextMenu := currentMenu.Execute()
-		if nextMenu != nil {
-			currentMenu = nextMenu
+	fmt.Println(os.Args)
+	if len(os.Args) > 1 {
+		switch strings.ToLower(os.Args[1]) {
+		case "sync":
+			sync()
+		case "scrape":
+			scrape()
 		}
 	}
 }
 
-func ensureEnvFolderExists(homeDir string) {
-	_, err := os.Open(homeDir + "/.env")
+func sync() {
+	fmt.Println("Syncing...")
+	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		if !errors.Is(err, os.ErrNotExist) {
-			log.Fatal("Failed to open .env folder", err)
-		}
-		err := os.Mkdir(homeDir+"/.env", 0755)
-		if err != nil {
-			log.Fatal("Failed to create .env directory", err)
-		}
+		log.Fatal("Could not get home directory of user:", err)
 	}
+
+	fmt.Printf("Home directory: %s\n", homeDir)
+
+	installBash(homeDir)
+	installTmux(homeDir)
+	installVim(homeDir)
+	installGit()
+	installVscode(homeDir)
+}
+
+func scrape() {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		log.Fatal("Could not get home directory of user:", err)
+	}
+	vscode.ScrapeVSCodeConfig(homeDir)
+}
+
+//go:embed tmux.conf
+var tmuxConf []byte
+
+const TmuxConfFilename = ".tmux.conf"
+
+func installTmux(homeDir string) {
+	fmt.Println("---------- Installing Tmux ----------")
+	fmt.Println("Adding .tmux.conf file to HomeDir")
+	err := ioutil.WriteFile(fmt.Sprintf("%s/%s", homeDir, TmuxConfFilename), []byte(tmuxConf), 0644)
+	if err != nil {
+		log.Fatalln("Tmux installation failed.", err)
+	}
+	fmt.Println("Done!")
+}
+
+//go:embed vim.conf
+var vimConf []byte
+
+var vimConfFilename = ".vimrc"
+
+func installVim(homeDir string) {
+	fmt.Println("---------- Installing Vim ----------")
+	fmt.Println("Installing...")
+	fmt.Println("Adding .vimrc file to HomeDir")
+	err := ioutil.WriteFile(fmt.Sprintf("%s/%s", homeDir, vimConfFilename), vimConf, 0644)
+	if err != nil {
+		log.Fatalln("Error installing vim.", err)
+	}
+	fmt.Println("Done!")
+
+}
+
+func installVscode(homeDir string) {
+	fmt.Println("Installing VSCode configuration")
 }

@@ -1,11 +1,12 @@
-package modules
+package main
 
 import (
 	"errors"
 	"fmt"
-	"gitlab.com/dentych/habitat/configuration"
 	"log"
 	"os/exec"
+
+	"gitlab.com/dentych/habitat/configuration"
 )
 
 var gitAliases = map[string]string{
@@ -26,18 +27,7 @@ var gitAliases = map[string]string{
 	"alias.pushb": "!git push -u origin $(git rev-parse --abbrev-ref HEAD)",
 }
 
-type git struct {
-}
-
-func NewGitModule() Module {
-	return git{}
-}
-
-func (git) Name() string {
-	return "git"
-}
-
-func (g git) Install() {
+func installGit() {
 	fmt.Println("Installing...")
 	if !gitExists() {
 		log.Fatalln("git command not found. Please install git to use this module.")
@@ -55,20 +45,6 @@ func (g git) Install() {
 	}
 
 	fmt.Println("Done!")
-}
-
-func (git) Uninstall() {
-	fmt.Println("Uninstalling...")
-	fmt.Println("Unsetting user.name")
-	executeCommand("--unset", "user.name")
-	fmt.Println("Unsetting user.email")
-	executeCommand("--unset", "user.email")
-
-	for k := range gitAliases {
-		fmt.Println("Unsetting", k)
-		executeCommand("--unset", k)
-	}
-	fmt.Println("Uninstallation done!")
 }
 
 func gitExists() bool {

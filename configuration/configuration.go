@@ -20,7 +20,7 @@ type Configuration struct {
 var Config Configuration
 
 func (c *Configuration) Load() {
-	data, err := ioutil.ReadFile(homeDir() + "/.env/config")
+	data, err := ioutil.ReadFile(homeDir() + "/.habitat/config")
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
 			c.Save()
@@ -36,7 +36,7 @@ func (c *Configuration) Load() {
 }
 
 func (c *Configuration) Save() {
-	err := ioutil.WriteFile(homeDir() +  "/.env/config", Config.marshal(), 0644)
+	err := ioutil.WriteFile(homeDir()+"/.habitat/config", Config.marshal(), 0644)
 	if err != nil {
 		log.Fatal("Failed to write configuration file: ", err)
 	}
