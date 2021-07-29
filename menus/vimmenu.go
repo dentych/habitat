@@ -1,7 +1,7 @@
 package menus
 
 import (
-	"gitlab.com/dentych/env/modules"
+	"gitlab.com/dentych/habitat/modules"
 )
 
 type VimMenu struct {

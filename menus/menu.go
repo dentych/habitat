@@ -2,8 +2,8 @@ package menus
 
 import (
 	"fmt"
-	"gitlab.com/dentych/env/modules"
-	"gitlab.com/dentych/env/terminal"
+	"gitlab.com/dentych/habitat/modules"
+	"gitlab.com/dentych/habitat/terminal"
 )
 
 var ErrEmptyInput = fmt.Errorf("empty input")

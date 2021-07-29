@@ -2,8 +2,8 @@ package menus
 
 import (
 	"fmt"
-	"gitlab.com/dentych/env/configuration"
-	"gitlab.com/dentych/env/terminal"
+	"gitlab.com/dentych/habitat/configuration"
+	"gitlab.com/dentych/habitat/terminal"
 )
 
 type EditConfigMenu struct {

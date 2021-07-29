@@ -2,8 +2,8 @@ package main
 
 import (
 	"errors"
-	"gitlab.com/dentych/env/configuration"
-	"gitlab.com/dentych/env/menus"
+	"gitlab.com/dentych/habitat/configuration"
+	"gitlab.com/dentych/habitat/menus"
 	"log"
 	"os"
 	"strings"
@@ -37,7 +37,7 @@ func ensureEnvFolderExists(homeDir string) {
 		if !errors.Is(err, os.ErrNotExist) {
 			log.Fatal("Failed to open .env folder", err)
 		}
-		err := os.Mkdir(homeDir +  "/.env", 0755)
+		err := os.Mkdir(homeDir+"/.env", 0755)
 		if err != nil {
 			log.Fatal("Failed to create .env directory", err)
 		}
