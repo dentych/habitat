@@ -30,6 +30,7 @@ const bashSourceString = "\n. %s\n"
 var gitPrompt []byte
 
 func installBash(homeDir string) {
+	fmt.Println("---------- Bash ----------")
 	fmt.Println("Installing...")
 	fmt.Println("Generating bash aliases and PS1 config")
 	var output bytes.Buffer
@@ -98,7 +99,7 @@ func addFileToBash(homeDir string, filepath string) {
 			if err == nil {
 				return
 			} else {
-				log.Fatal("Failed to write bash file", err)
+				log.Fatalln("Failed to write bash file", err)
 			}
 		}
 		log.Fatalln("Could not write bashrc file", err)

@@ -28,6 +28,9 @@ var gitAliases = map[string]string{
 }
 
 func installGit() {
+	fmt.Println("---------- Git ----------")
+	fmt.Println("Verifying Git configuration with environment variables")
+	verifyConfiguration(configuration.Config.Git)
 	fmt.Println("Installing...")
 	if !gitExists() {
 		log.Fatalln("git command not found. Please install git to use this module.")
@@ -69,5 +72,11 @@ func executeCommand(args ...string) {
 		if cmd.ProcessState.ExitCode() != 5 {
 			log.Fatalf("Failed to run command '%s': %s", cmd.String(), err)
 		}
+	}
+}
+
+func verifyConfiguration(config configuration.GitConfig) {
+	if config.Name == "" || config.Email == "" {
+		log.Fatalln("Git config name or email is missing. Please specify with HABITAT_GIT_NAME and HABITAT_GIT_EMAIL")
 	}
 }

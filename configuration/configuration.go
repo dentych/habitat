@@ -9,12 +9,13 @@ import (
 	"strings"
 )
 
+type GitConfig struct {
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	Directory string `json:"directory"`
+}
 type Configuration struct {
-	Git struct {
-		Name      string `json:"name"`
-		Email     string `json:"email"`
-		Directory string `json:"directory"`
-	} `json:"git"`
+	Git GitConfig `json:"git"`
 }
 
 var Config Configuration
@@ -25,12 +26,12 @@ func (c *Configuration) Load() {
 		if errors.Is(err, os.ErrNotExist) {
 			c.Save()
 		} else {
-			log.Fatal("Failed to read configuration file: ", err)
+			log.Fatalln("Failed to read configuration file: ", err)
 		}
 	} else {
 		err = c.unmarshal(data)
 		if err != nil {
-			log.Fatal("Failed to load configuration file: ", err)
+			log.Fatalln("Failed to load configuration file: ", err)
 		}
 	}
 }
@@ -38,7 +39,7 @@ func (c *Configuration) Load() {
 func (c *Configuration) Save() {
 	err := ioutil.WriteFile(homeDir()+"/.habitat/config", Config.marshal(), 0644)
 	if err != nil {
-		log.Fatal("Failed to write configuration file: ", err)
+		log.Fatalln("Failed to write configuration file: ", err)
 	}
 }
 

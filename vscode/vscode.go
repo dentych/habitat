@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 	"runtime"
 )
 
@@ -18,15 +19,29 @@ func ScrapeVSCodeConfig(homeDir string) {
 
 	keybindingJson, err := os.ReadFile(keybindingPath)
 	if err != nil {
-		log.Fatal("Failed to read keybindings:", err)
+		log.Fatalln("Failed to read keybindings: ", err)
 	}
-	os.WriteFile("keybindings.json", keybindingJson, 0644)
+	os.WriteFile("vscode/keybindings.json", keybindingJson, 0644)
 
 	settingsJson, err := os.ReadFile(settingsPath)
 	if err != nil {
-		log.Fatal("Failed to read settings:", err)
+		log.Fatalln("Failed to read settings: ", err)
 	}
-	os.WriteFile("settings.json", settingsJson, 0644)
+	os.WriteFile("vscode/settings.json", settingsJson, 0644)
+
+	cmd := exec.Command("code", "--version")
+	_, err = cmd.Output()
+	if err != nil {
+		log.Fatalln("Err command: ", err)
+	}
+
+	cmd = exec.Command("code", "--list-extensions")
+	output, err := cmd.Output()
+	if err != nil {
+		log.Fatalln("Err command: ", err)
+	}
+
+	os.WriteFile("vscode/extensions.txt", output, 0644)
 }
 
 func getKeybindingPath(homeDir string) string {

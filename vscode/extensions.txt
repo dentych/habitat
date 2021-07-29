@@ -1,0 +1,5 @@
+eamodio.gitlens
+golang.go
+vscode-icons-team.vscode-icons
+vscodevim.vim
+zhuangtongfa.material-theme

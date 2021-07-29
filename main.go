@@ -25,13 +25,13 @@ func main() {
 }
 
 func sync() {
-	fmt.Println("Syncing...")
+	fmt.Println("---------- Synchronizing configuration ----------")
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		log.Fatal("Could not get home directory of user:", err)
+		log.Fatalln("Could not get home directory of user:", err)
 	}
 
-	fmt.Printf("Home directory: %s\n", homeDir)
+	fmt.Printf("Home directory is: %s\n", homeDir)
 
 	installBash(homeDir)
 	installTmux(homeDir)
@@ -41,9 +41,10 @@ func sync() {
 }
 
 func scrape() {
+	fmt.Println("Scraping configuration files...")
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		log.Fatal("Could not get home directory of user:", err)
+		log.Fatalln("Could not get home directory of user:", err)
 	}
 	vscode.ScrapeVSCodeConfig(homeDir)
 }
@@ -81,5 +82,6 @@ func installVim(homeDir string) {
 }
 
 func installVscode(homeDir string) {
+	fmt.Println("---------- VSCode ----------")
 	fmt.Println("Installing VSCode configuration")
 }
