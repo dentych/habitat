@@ -10,7 +10,7 @@ build linux/amd64:
   stage: build
   image: golang
   script:
-    - GOOS=linux GOARCH=amd64 go build -o env main.go
+    - GOOS=linux GOARCH=amd64 go build -o env *.go
   artifacts:
     paths:
       - env
@@ -20,7 +20,7 @@ build windows/amd64:
   stage: build
   image: golang
   script:
-    - GOOS=windows GOARCH=amd64 go build -o env.exe main.go
+    - GOOS=windows GOARCH=amd64 go build -o env.exe *.go
   artifacts:
     paths:
       - env.exe
