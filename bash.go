@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"os"
 	"strings"
+
+	"gitlab.com/dentych/habitat/terminal"
 )
 
 var bashAliases = map[string]string{
@@ -27,10 +29,8 @@ const gitPromptFileName = "git-prompt.sh"
 
 const bashSourceString = "\n. %s\n"
 
-var gitPrompt []byte
-
 func installBash(homeDir string) {
-	fmt.Println("---------- Bash ----------")
+	terminal.PrintHeading("Bash")
 	fmt.Println("Installing...")
 	fmt.Println("Generating bash aliases and PS1 config")
 	var output bytes.Buffer

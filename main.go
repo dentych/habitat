@@ -9,6 +9,7 @@ import (
 
 	_ "embed"
 
+	"gitlab.com/dentych/habitat/terminal"
 	"gitlab.com/dentych/habitat/vscode"
 )
 
@@ -25,7 +26,7 @@ func main() {
 }
 
 func sync() {
-	fmt.Println("---------- Synchronizing configuration ----------")
+	terminal.PrintHeading("Synchronizing configuration")
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatalln("Could not get home directory of user:", err)
@@ -41,12 +42,12 @@ func sync() {
 }
 
 func scrape() {
-	fmt.Println("Scraping configuration files...")
+	terminal.PrintHeading("Scraping configuration files")
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatalln("Could not get home directory of user:", err)
 	}
-	vscode.ScrapeVSCodeConfig(homeDir)
+	vscode.ScrapeVSCode(homeDir)
 }
 
 //go:embed tmux.conf
@@ -55,7 +56,7 @@ var tmuxConf []byte
 const TmuxConfFilename = ".tmux.conf"
 
 func installTmux(homeDir string) {
-	fmt.Println("---------- Installing Tmux ----------")
+	terminal.PrintHeading("Installing Tmux")
 	fmt.Println("Adding .tmux.conf file to HomeDir")
 	err := ioutil.WriteFile(fmt.Sprintf("%s/%s", homeDir, TmuxConfFilename), []byte(tmuxConf), 0644)
 	if err != nil {
@@ -70,7 +71,7 @@ var vimConf []byte
 var vimConfFilename = ".vimrc"
 
 func installVim(homeDir string) {
-	fmt.Println("---------- Installing Vim ----------")
+	terminal.PrintHeading("Installing Vim")
 	fmt.Println("Installing...")
 	fmt.Println("Adding .vimrc file to HomeDir")
 	err := ioutil.WriteFile(fmt.Sprintf("%s/%s", homeDir, vimConfFilename), vimConf, 0644)
@@ -82,6 +83,7 @@ func installVim(homeDir string) {
 }
 
 func installVscode(homeDir string) {
-	fmt.Println("---------- VSCode ----------")
+	terminal.PrintHeading("VSCode")
 	fmt.Println("Installing VSCode configuration")
+	vscode.InstallVSCode(homeDir)
 }

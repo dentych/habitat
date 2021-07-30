@@ -1,22 +1,42 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
     {
-        "key": "shift+cmd+right",
         "command": "workbench.action.increaseViewSize",
+        "key": "shift+cmd+right",
         "when": "!editorTextFocus"
     },
     {
-        "key": "shift+cmd+left",
         "command": "workbench.action.decreaseViewSize",
+        "key": "shift+cmd+left",
         "when": "!editorTextFocus"
     },
     {
-        "key": "cmd+n",
         "command": "explorer.newFile",
+        "key": "cmd+n",
         "when": "workspaceState != 'empty'"
     },
     {
-        "key": "shift+escape",
         "command": "workbench.action.closePanel"
+        "key": "shift+escape",
+    },
+    {
+        "command": "explorer.openAndPassFocus",
+        "key": "enter",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
+    },
+    {
+        "command": "-explorer.openAndPassFocus",
+        "key": "cmd+down",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
+    },
+    {
+        "command": "renameFile",
+        "key": "f2",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "command": "-renameFile",
+        "key": "enter",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
     }
 ]

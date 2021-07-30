@@ -2,6 +2,7 @@ package terminal
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"os"
 	"os/exec"
@@ -42,4 +43,29 @@ func ReadEnter() {
 	if scanner.Scan() {
 		return
 	}
+}
+
+func PrintHeading(heading string) {
+	maxLength := 60
+	if len(heading) >= maxLength {
+		fmt.Println(heading)
+		return
+	}
+
+	dashAmount := (maxLength - len(heading) - 2) / 2
+	var buf bytes.Buffer
+	for i := 0; i < dashAmount; i++ {
+		buf.WriteRune('-')
+	}
+	buf.WriteRune(' ')
+	buf.WriteString(heading)
+	buf.WriteRune(' ')
+	for i := 0; i < dashAmount; i++ {
+		buf.WriteRune('-')
+	}
+	for buf.Len() < maxLength {
+		buf.WriteRune('-')
+	}
+
+	fmt.Println(buf.String())
 }

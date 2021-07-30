@@ -8,14 +8,22 @@ import (
 	"runtime"
 )
 
-func ScrapeVSCodeConfig(homeDir string) {
-	fmt.Println("Scraping VS Code configuration files")
-	keybindingPath := getKeybindingPath(homeDir)
-	settingsPath := getSettingsPath(homeDir)
+func InstallVSCode(homeDir string) {
+	fmt.Println("Creating VSCode settings directory if it doesn't exist: ", getVsCodeSettingsDirectory(homeDir))
+	err := os.MkdirAll(getVsCodeSettingsDirectory(homeDir), 0755)
+	if err != nil {
+		log.Fatalln("There was an error making the VsCode settings directory: ", err)
+	}
+}
 
-	if keybindingPath == "" || settingsPath == "" {
+func ScrapeVSCode(homeDir string) {
+	fmt.Println("Scraping VS Code configuration files")
+	settingsDir := getVsCodeSettingsDirectory(homeDir)
+	if settingsDir == "" {
 		log.Fatalf("Unsupported platform detected: %s\n", runtime.GOOS)
 	}
+	keybindingPath := getKeybindingPath(settingsDir)
+	settingsPath := getSettingsPath(settingsDir)
 
 	keybindingJson, err := os.ReadFile(keybindingPath)
 	if err != nil {
@@ -44,24 +52,19 @@ func ScrapeVSCodeConfig(homeDir string) {
 	os.WriteFile("vscode/extensions.txt", output, 0644)
 }
 
-func getKeybindingPath(homeDir string) string {
+func getVsCodeSettingsDirectory(homeDir string) string {
 	switch runtime.GOOS {
 	case "darwin":
-		return fmt.Sprintf("%s/Library/Application Support/Code/User/keybindings.json", homeDir)
+		return fmt.Sprintf("%s/Library/Application Support/Code/User", homeDir)
 	case "windows":
 		return fmt.Sprintf("%s/AppData/Roaming/Code/User/keybindings.json", homeDir)
 	}
-
 	return ""
 }
+func getKeybindingPath(settingsDir string) string {
+	return fmt.Sprintf("%s/keybindings.json", settingsDir)
+}
 
-func getSettingsPath(homeDir string) string {
-	switch runtime.GOOS {
-	case "darwin":
-		return fmt.Sprintf("%s/Library/Application Support/Code/User/settings.json", homeDir)
-	case "windows":
-		return fmt.Sprintf("%s/AppData/Roaming/Code/User/keybindings.json", homeDir)
-	}
-
-	return ""
+func getSettingsPath(settingsDir string) string {
+	return fmt.Sprintf("%s/settings.json", settingsDir)
 }

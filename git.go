@@ -7,6 +7,7 @@ import (
 	"os/exec"
 
 	"gitlab.com/dentych/habitat/configuration"
+	"gitlab.com/dentych/habitat/terminal"
 )
 
 var gitAliases = map[string]string{
@@ -28,18 +29,22 @@ var gitAliases = map[string]string{
 }
 
 func installGit() {
-	fmt.Println("---------- Git ----------")
+	terminal.PrintHeading("Git")
 	fmt.Println("Verifying Git configuration with environment variables")
-	verifyConfiguration(configuration.Config.Git)
 	fmt.Println("Installing...")
 	if !gitExists() {
 		log.Fatalln("git command not found. Please install git to use this module.")
 	}
 
-	fmt.Println("Setting user.name")
-	executeCommand("user.name", configuration.Config.Git.Name)
-	fmt.Println("Setting user.email")
-	executeCommand("user.email", configuration.Config.Git.Email)
+	valid := verifyConfiguration(configuration.Config.Git)
+	if !valid {
+		fmt.Println("**** WARNING: Skipping configuring git username and email, because the environment variables are not set (HABITAT_GIT_NAME, HABITAT_GIT_EMAIL).")
+	} else {
+		fmt.Println("Setting user.name")
+		executeCommand("user.name", configuration.Config.Git.Name)
+		fmt.Println("Setting user.email")
+		executeCommand("user.email", configuration.Config.Git.Email)
+	}
 
 	fmt.Println("Setting up git aliases")
 	for k, v := range gitAliases {
@@ -75,8 +80,6 @@ func executeCommand(args ...string) {
 	}
 }
 
-func verifyConfiguration(config configuration.GitConfig) {
-	if config.Name == "" || config.Email == "" {
-		log.Fatalln("Git config name or email is missing. Please specify with HABITAT_GIT_NAME and HABITAT_GIT_EMAIL")
-	}
+func verifyConfiguration(config configuration.GitConfig) bool {
+	return config.Name != "" && config.Email != ""
 }
