@@ -1,5 +1,7 @@
+42Crunch.vscode-openapi
 eamodio.gitlens
 golang.go
+redhat.vscode-yaml
 vscode-icons-team.vscode-icons
 vscodevim.vim
 zhuangtongfa.material-theme
