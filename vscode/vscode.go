@@ -92,7 +92,7 @@ func getVsCodeSettingsDirectory(homeDir string) string {
 	case "darwin":
 		return fmt.Sprintf("%s/Library/Application Support/Code/User", homeDir)
 	case "windows":
-		return fmt.Sprintf("%s/AppData/Roaming/Code/User/keybindings.json", homeDir)
+		return fmt.Sprintf("%s/AppData/Roaming/Code/User", homeDir)
 	}
 	return ""
 }
