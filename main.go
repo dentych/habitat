@@ -23,6 +23,8 @@ func main() {
 		default:
 			fmt.Println("Valid commands are:\n* sync - will sync all configuration files\n* scape - will scrape config files and save to the repo")
 		}
+	} else {
+		fmt.Println("Valid commands are:\n* sync - will sync all configuration files\n* scape - will scrape config files and save to the repo")
 	}
 }
 
