@@ -99,7 +99,11 @@ func installBash(homeDir string) {
 }
 
 func addFileToBash(homeDir string, filepath string) {
-	bashrcPath := fmt.Sprintf("%s/.bashrc", homeDir)
+	bashrcPath := fmt.Sprintf("%s/.zshrc", homeDir)
+	_, err := os.Stat(bashrcPath)
+	if err != nil {
+		bashrcPath = fmt.Sprintf("%s/.bashrc", homeDir)
+	}
 	strToAppend := fmt.Sprintf(bashSourceString, filepath)
 	content, err := ioutil.ReadFile(bashrcPath)
 	if err != nil {
@@ -111,8 +115,9 @@ func addFileToBash(homeDir string, filepath string) {
 			} else {
 				log.Fatalln("Failed to write bash file", err)
 			}
+		} else {
+			log.Fatalln("Could not write bashrc file", err)
 		}
-		log.Fatalln("Could not write bashrc file", err)
 	} else {
 		if !strings.Contains(string(content), filepath) {
 			f, fileErr := os.OpenFile(bashrcPath, os.O_APPEND|os.O_WRONLY, 0644)
