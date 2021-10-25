@@ -22,10 +22,12 @@ var bashAliases = map[string]string{
 	"gca":  "git clean -f && git clean -f -d && git checkout -f",
 	"dc":   "docker-compose",
 	"drma": "docker rm -f \\$(docker ps -aq)",
+	"got": "go test ./...",
 }
 
 const bashFileName = "bash-setup.sh"
 const gitPromptFileName = "git-prompt.sh"
+const customBashFileName = "custom.sh"
 
 const bashSourceString = "\n. %s\n"
 
@@ -61,6 +63,13 @@ func installBash(homeDir string) {
 	if err != nil {
 		log.Fatalf("Failed to write git-prompt.sh file: %s", err)
 	}
+	defer out.Close()
+
+	customFile, err := os.Create(fmt.Sprintf("%s/.habitat/%s", homeDir, customBashFileName))
+	if err != nil {
+		log.Fatalf("Failed to write custom bash setup file: %s", err)
+	}
+	defer customFile.Close()
 
 	_, err = io.Copy(out, resp.Body)
 	if err != nil {
@@ -76,6 +85,7 @@ func installBash(homeDir string) {
 
 	output.WriteString(fmt.Sprintf("\nsource %s/.habitat/%s\n", homeDir, gitPromptFileName))
 	output.WriteString("PS1='\\[\\e[32m\\]\\u@\\h \\[\\e[33m\\]\\w\\[\\e[92m\\]$(__git_ps1 \" (%s)\")\\[\\e[00m\\] $ '\n")
+	output.WriteString(fmt.Sprintf("\n. %s/.habitat/%s\n", homeDir, customBashFileName))
 
 	fmt.Println("Creating bash setup script file")
 	err = ioutil.WriteFile(fmt.Sprintf("%s/.habitat/%s", homeDir, bashFileName), output.Bytes(), 0644)

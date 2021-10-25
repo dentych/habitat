@@ -14,13 +14,14 @@ import (
 )
 
 func main() {
-	fmt.Println(os.Args)
 	if len(os.Args) > 1 {
 		switch strings.ToLower(os.Args[1]) {
 		case "sync":
 			sync()
 		case "scrape":
 			scrape()
+		default:
+			fmt.Println("Valid commands are:\n* sync - will sync all configuration files\n* scape - will scrape config files and save to the repo")
 		}
 	}
 }
