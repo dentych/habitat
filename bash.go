@@ -23,6 +23,7 @@ var bashAliases = map[string]string{
 	"dc":   "docker-compose",
 	"drma": "docker rm -f \\$(docker ps -aq)",
 	"got": "go test ./...",
+	"goti": "go test --tags integration ./...",
 }
 
 const bashFileName = "bash-setup.sh"
@@ -65,11 +66,15 @@ func installBash(homeDir string) {
 	}
 	defer out.Close()
 
-	customFile, err := os.Create(fmt.Sprintf("%s/.habitat/%s", homeDir, customBashFileName))
-	if err != nil {
-		log.Fatalf("Failed to write custom bash setup file: %s", err)
+	customFilePath := fmt.Sprintf("%s/.habitat/%s", homeDir, customBashFileName)
+	_, err = os.Stat(customFilePath)
+	if os.IsNotExist(err) {
+		f, err := os.Create(customFilePath)
+		if err != nil {
+			log.Fatalf("Failed to write custom bash setup file: %s", err)
+		}
+		defer f.Close()
 	}
-	defer customFile.Close()
 
 	_, err = io.Copy(out, resp.Body)
 	if err != nil {

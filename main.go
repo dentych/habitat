@@ -17,7 +17,11 @@ func main() {
 	if len(os.Args) > 1 {
 		switch strings.ToLower(os.Args[1]) {
 		case "sync":
-			sync()
+			if len(os.Args) > 2 {
+				sync(os.Args[2:]...)
+			} else {
+				sync()
+			}
 		case "scrape":
 			scrape()
 		default:
@@ -28,7 +32,13 @@ func main() {
 	}
 }
 
-func sync() {
+func sync(args ...string) {
+	enableVsCode := false
+	for _, arg := range args {
+		if arg == "--vscode" {
+			enableVsCode = true
+		}
+	}
 	terminal.PrintHeading("Synchronizing configuration")
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
@@ -41,7 +51,9 @@ func sync() {
 	installTmux(homeDir)
 	installVim(homeDir)
 	installGit()
-	installVscode(homeDir)
+	if enableVsCode {
+		installVscode(homeDir)
+	}
 }
 
 func scrape() {
