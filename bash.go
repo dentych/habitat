@@ -16,13 +16,13 @@ import (
 
 var bashAliases = map[string]string{
 	"gs":   "git status",
-	"ls":   "ls --color",
+	"ls":   "ls -G",
 	"vi":   "vim",
 	"gc":   "git clean -f && git clean -f -d",
 	"gca":  "git clean -f && git clean -f -d && git checkout -f",
 	"dc":   "docker-compose",
 	"drma": "docker rm -f \\$(docker ps -aq)",
-	"got": "go test ./...",
+	"got":  "go test ./...",
 	"goti": "go test --tags integration ./...",
 }
 
